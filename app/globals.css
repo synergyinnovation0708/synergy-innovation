@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-manrope), "Manrope", Arial, Helvetica, sans-serif;
+}
+
+@keyframes clients-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes synergy-loader-orbit {
+  0% {
+    opacity: 0.35;
+    transform: rotate(0deg) scale(0.98);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: rotate(180deg) scale(1.02);
+  }
+
+  100% {
+    opacity: 0.35;
+    transform: rotate(360deg) scale(0.98);
+  }
+}
+
+@keyframes synergy-loader-dot {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes it-services-side-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 18px, 0);
+  }
+}
+
+@keyframes it-services-soft-glow {
+  0%,
+  100% {
+    opacity: 0.88;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes page-wave-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 16px, 0);
+  }
+}
+
+@keyframes page-art-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+.synergy-loader-orbit {
+  animation: synergy-loader-orbit 2.8s linear infinite;
+}
+
+.synergy-loader-orbit-delay {
+  animation: synergy-loader-orbit 2.8s linear infinite reverse;
+  animation-delay: 0.35s;
+}
+
+.synergy-loader-dot {
+  animation: synergy-loader-dot 1s ease-in-out infinite;
+}
+
+.it-services-side-drift {
+  animation: it-services-side-drift 14s ease-in-out infinite;
+}
+
+.it-services-side-drift-reverse {
+  animation-direction: reverse;
+  animation-duration: 17s;
+}
+
+.it-services-soft-glow {
+  animation: it-services-soft-glow 5.2s ease-in-out infinite;
+  transform-origin: center top;
+}
+
+.page-wave-drift {
+  animation: page-wave-drift 16s ease-in-out infinite;
+}
+
+.page-art-float {
+  animation: page-art-float 7.2s ease-in-out infinite;
+}
+
+.page-art-float-delay {
+  animation: page-art-float 8.4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .synergy-loader-orbit,
+  .synergy-loader-orbit-delay,
+  .synergy-loader-dot,
+  .it-services-side-drift,
+  .it-services-side-drift-reverse,
+  .it-services-soft-glow,
+  .page-wave-drift,
+  .page-art-float,
+  .page-art-float-delay {
+    animation: none;
+  }
+}
+
+.admin-rich-editor .tiptap p.is-editor-empty:first-child::before {
+  color: #8794b1;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.admin-rich-editor .tiptap p,
+.admin-rich-editor .tiptap ul,
+.admin-rich-editor .tiptap ol,
+.admin-rich-editor .tiptap blockquote {
+  margin: 0;
+}
+
+.admin-rich-editor .tiptap ul,
+.admin-rich-editor .tiptap ol {
+  padding-left: 1.25rem;
+}
+
+.admin-rich-editor .tiptap ul {
+  list-style: disc;
+}
+
+.admin-rich-editor .tiptap ol {
+  list-style: decimal;
+}
+
+.admin-rich-editor .tiptap li {
+  display: list-item;
+}
+
+.admin-rich-editor .tiptap li + li {
+  margin-top: 0.35rem;
+}
+
+.admin-rich-editor .tiptap blockquote {
+  border-left: 3px solid #c4d8eb;
+  background: #f3f8fc;
+  color: #5e6a86;
+  padding-block: 0.75rem;
+  padding-left: 1rem;
+}
+
+.jobs-filter-scrollbar {
+  scrollbar-color: #98a4b6 transparent;
+  scrollbar-width: thin;
+}
+
+.jobs-filter-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.jobs-filter-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.jobs-filter-scrollbar::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  background: #98a4b6;
+  background-clip: padding-box;
+}
