@@ -5,7 +5,7 @@ import type {
   AdminJobApplicantsSummary,
 } from "@/lib/admin-job-applications-shared";
 import {
-  createCloudinaryPrivateDownloadUrl,
+  createCloudinaryResumeAccessUrl,
   hasCloudinaryEnv,
 } from "@/lib/cloudinary";
 import { requireAdminApiAccess } from "@/lib/admin-api";
@@ -164,7 +164,7 @@ const buildResumeDownloadUrl = (resumeUrl: string) => {
   }
 
   try {
-    return createCloudinaryPrivateDownloadUrl(resumeUrl, {
+    return createCloudinaryResumeAccessUrl(resumeUrl, {
       attachment: true,
     });
   } catch {

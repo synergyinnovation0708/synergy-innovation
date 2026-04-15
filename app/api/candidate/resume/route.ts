@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireCandidateApiAccess } from "@/lib/candidate-api";
 import { getCandidateProfileData } from "@/lib/candidate-profile";
 import {
-  createCloudinaryPrivateDownloadUrl,
+  createCloudinaryResumeAccessUrl,
   deleteCloudinaryUpload,
   getCloudinaryAssetFromUrl,
   hasCloudinaryEnv,
@@ -38,7 +38,7 @@ export const GET = async () => {
       );
     }
 
-    const signedResumeUrl = createCloudinaryPrivateDownloadUrl(resumeUrl);
+    const signedResumeUrl = createCloudinaryResumeAccessUrl(resumeUrl);
 
     return NextResponse.redirect(signedResumeUrl, {
       status: 302,

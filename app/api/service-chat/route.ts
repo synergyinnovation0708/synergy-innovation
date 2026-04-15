@@ -122,6 +122,7 @@ const buildSystemPrompt = () =>
     "You are Synergy Innovation's service chatbot.",
     "Respond in English unless the user explicitly asks for another language.",
     "Answer service and product questions using only the approved service catalog below.",
+    "When the user's question clearly matches an approved FAQ, stay close to the approved answer while keeping the tone natural and conversational.",
     "Do not invent capabilities, clients, pricing, timelines, or technical details beyond what the catalog supports.",
     "If the user asks something outside the catalog, say that you can help with Synergy's listed services and invite them to ask about the closest matching offering.",
     "Return only valid JSON with this exact shape:",
@@ -398,7 +399,7 @@ export const POST = async (request: Request) => {
     if (!isRecord(parsedOutput)) {
       const fallbackAnswer =
         outputText ||
-        "I can help with Synergy's recruitment, IT services, branding, AI attendance, and school transport offerings.";
+        "I can help with Synergy's recruitment, hiring, IT services, branding, AI solutions, AI attendance, and school transport offerings.";
 
       const usage = getAiUsageFromResponse(rawPayload);
 
@@ -422,7 +423,7 @@ export const POST = async (request: Request) => {
 
     const answer =
       readString(parsedOutput.answer) ||
-      "I can help with Synergy's recruitment, IT services, branding, AI attendance, and school transport offerings.";
+      "I can help with Synergy's recruitment, hiring, IT services, branding, AI solutions, AI attendance, and school transport offerings.";
     const relatedServiceLabels = readRelatedServiceLabels(
       parsedOutput.relatedServiceLabels,
     );

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminApiAccess } from "@/lib/admin-api";
 import {
-  createCloudinaryPrivateDownloadUrl,
+  createCloudinaryResumeAccessUrl,
   hasCloudinaryEnv,
 } from "@/lib/cloudinary";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -52,6 +52,11 @@ export const GET = async (_request: Request, context: RouteContext) => {
       .maybeSingle();
 
     if (error) {
+      console.error("Admin job seeker resume lookup failed:", {
+        jobSeekerId,
+        message: error.message,
+      });
+
       return NextResponse.json(
         {
           message: "Unable to load the job seeker resume right now.",
@@ -72,12 +77,17 @@ export const GET = async (_request: Request, context: RouteContext) => {
       );
     }
 
-    const signedResumeUrl = createCloudinaryPrivateDownloadUrl(resumeUrl);
+    const signedResumeUrl = createCloudinaryResumeAccessUrl(resumeUrl);
 
     return NextResponse.redirect(signedResumeUrl, {
       status: 302,
     });
-  } catch {
+  } catch (error) {
+    console.error("Admin job seeker resume access failed:", {
+      jobSeekerId,
+      error,
+    });
+
     return NextResponse.json(
       {
         message: "Unable to load the job seeker resume right now.",

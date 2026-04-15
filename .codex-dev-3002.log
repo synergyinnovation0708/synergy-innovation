@@ -1,0 +1,39 @@
+
+> my-app@0.1.0 dev
+> next dev --webpack --port 3002
+
+▲ Next.js 16.1.6 (webpack)
+- Local:         http://localhost:3002
+- Network:       http://192.168.1.3:3002
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 7.1s
+○ Compiling / ...
+ GET / 200 in 11.4s (compile: 10.8s, proxy.ts: 213ms, render: 344ms)
+Image with src "/images/Image.png" is using quality "74" which is not configured in images.qualities [75]. Please update your config to [74, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+ GET / 200 in 2.8s (compile: 23ms, proxy.ts: 15ms, render: 2.8s)
+ GET / 200 in 1338ms (compile: 8ms, proxy.ts: 29ms, render: 1301ms)
+ POST /api/service-chat 200 in 7.0s (compile: 2.4s, proxy.ts: 55ms, render: 4.6s)
+ GET / 200 in 794ms (compile: 158ms, proxy.ts: 37ms, render: 599ms)
+⨯ ./lib/service-knowledge.ts
+Error: 
+
+Caused by:
+    0: Failed to read source code from c:\code\synergy-innovation\lib\service-knowledge.ts
+    1: The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./lib/service-knowledge.ts
+./components/ServiceChatbotCard.tsx
+ GET / 200 in 1167ms (compile: 484ms, proxy.ts: 75ms, render: 608ms)
+ GET / 200 in 1057ms (compile: 328ms, proxy.ts: 35ms, render: 694ms)
+ GET / 200 in 341ms (compile: 10ms, proxy.ts: 18ms, render: 313ms)
+ GET / 200 in 909ms (compile: 256ms, proxy.ts: 40ms, render: 612ms)
+ GET / 200 in 256ms (compile: 9ms, proxy.ts: 28ms, render: 219ms)
+ GET / 200 in 686ms (compile: 185ms, proxy.ts: 23ms, render: 478ms)
+ GET / 200 in 321ms (compile: 12ms, proxy.ts: 21ms, render: 288ms)
+ GET / 200 in 501ms (compile: 118ms, proxy.ts: 15ms, render: 369ms)
+ POST /api/service-chat 200 in 6.1s (compile: 1183ms, proxy.ts: 20ms, render: 4.9s)
+ POST /api/service-chat 200 in 6.1s (compile: 1183ms, proxy.ts: 20ms, render: 4.9s)

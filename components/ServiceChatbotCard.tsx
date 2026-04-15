@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  MessageSquareText,
   SendHorizonal,
   Sparkles,
   X,
@@ -23,14 +22,14 @@ type ChatTurn = {
 const serviceChatInputMaxChars = 500;
 
 const starterPrompts = [
-  "What do you offer in recruitment services?",
-  "Tell me about your IT services and GenAI offerings",
+  "What job opportunities are available right now?",
+  "How can you help me hire candidates quickly?",
+  "Tell me about your IT services and AI offerings",
   "What is included in your branding services?",
-  "What is the use case for the AI IP Camera system?",
 ];
 
 const initialAssistantMessage =
-  "Hi! I'm SynergyBot. You can ask me about Recruitment, IT Services, Branding, the AI IP Camera system, or the School Bus platform.";
+  "Hi! I'm SynergyBot. You can ask me about jobs, hiring, IT services, branding, AI solutions, the AI IP Camera system, or the School Bus platform.";
 
 export const ServiceChatbotCard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -266,7 +265,12 @@ export const ServiceChatbotCard = () => {
           }`}
           onClick={() => setIsOpen(true)}
         >
-          <MessageSquareText className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
+          <img
+            src="/icons/chatbot-icon.svg"
+            alt=""
+            aria-hidden="true"
+            className="h-10 w-10 transition-transform duration-300 group-hover:scale-110"
+          />
         </button>
         {!isOpen ? (
           <div className="pointer-events-none absolute -left-[184px] top-1/2 hidden -translate-y-1/2 rounded-full border border-[#dbe6f2] bg-white/96 px-4 py-2 text-[13px] font-medium text-[#1d223f] shadow-[0_12px_30px_rgba(18,30,61,0.12)] md:block">
