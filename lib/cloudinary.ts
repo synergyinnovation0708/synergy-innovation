@@ -164,19 +164,6 @@ export const createCloudinaryPrivateDownloadUrl = (
   return `https://api.cloudinary.com/v1_1/${cloudName}/${parsedAsset.resourceType}/download?${searchParams.toString()}`;
 };
 
-const isDirectCloudinaryUrl = (assetUrl: string) => {
-  try {
-    const url = new URL(assetUrl);
-
-    return (
-      (url.protocol === "https:" || url.protocol === "http:") &&
-      url.hostname === "res.cloudinary.com"
-    );
-  } catch {
-    return false;
-  }
-};
-
 export const createCloudinaryResumeAccessUrl = (
   assetUrl: string,
   options?: {
@@ -190,15 +177,8 @@ export const createCloudinaryResumeAccessUrl = (
     throw new Error("Cloudinary asset URL is required.");
   }
 
-  try {
-    return createCloudinaryPrivateDownloadUrl(trimmedAssetUrl, options);
-  } catch (error) {
-    if (isDirectCloudinaryUrl(trimmedAssetUrl)) {
-      return trimmedAssetUrl;
-    }
-
-    throw error;
-  }
+  // Resume files can be blocked from public raw delivery, so always use a signed URL.
+  return createCloudinaryPrivateDownloadUrl(trimmedAssetUrl, options);
 };
 
 export const uploadResumeToCloudinary = async ({
