@@ -1,454 +1,813 @@
 import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Bot,
+  BriefcaseBusiness,
+  Code2,
+  Cpu,
+  Globe,
+  Mail,
+  Menu,
+  MapPin,
+  MessageSquareCode,
+  Phone,
+  Search,
+  ShieldCheck,
+  Smartphone,
+  Sparkles,
+  Star,
+  Workflow,
+} from "lucide-react";
 import type { ReactNode } from "react";
-import { FadeInView } from "@/components/FadeInView";
-import { NavigationHeaderSection } from "@/screens/HomePage/sections/NavigationHeaderSection";
-import { ITServicesExpertiseSection } from "./ITServicesExpertiseSection";
-import { ITServicesInquiryTrigger, ITServicesTopCta } from "./ITServicesTopCta";
+import { ITServicesInquiryTrigger } from "./ITServicesTopCta";
 
-const stories = [
+type ServiceCard = {
+  bullets: string[];
+  description: string;
+  icon: ReactNode;
+  title: string;
+};
+
+type ProductCard = {
+  badge: string;
+  description: string;
+  icon: ReactNode;
+  title: string;
+};
+
+type ProjectCard = {
+  category: string;
+  description?: string;
+  descriptionClassName?: string;
+  image: string;
+  imageClassName?: string;
+  location: string;
+  titleClassName?: string;
+  title: string;
+};
+
+type TestimonialCard = {
+  attribution: string;
+  body: string;
+  company: string;
+};
+
+const navItems = [
+  { href: "#services", label: "IT Services" },
+  { href: "#products", label: "AI Products" },
+  { href: "#projects", label: "Projects" },
+  { href: "#process", label: "Process" },
+  { href: "#testimonials", label: "Why Us" },
+];
+
+const heroMetrics = [
+  { label: "Years Since 2011", value: "15+" },
+  { label: "Faster Delivery", value: "3x" },
+  { label: "Manual Work Saved", value: "80%" },
+  { label: "Industries Served", value: "15+" },
+];
+
+const services: ServiceCard[] = [
   {
-    title: "Global BFSI Firm",
-    description: "Scaled operations by 40% with a custom ERP solution.",
-    image: "/images/it-story-bfsi.jpg",
-    imageClassName: "object-[50%_54%]",
+    title: "Website Development",
+    description:
+      "Custom corporate websites and portals engineered for speed, search visibility, security, and conversion.",
+    bullets: ["Custom build", "SEO ready", "High performance"],
+    icon: <Globe className="h-5 w-5" />,
   },
   {
-    title: "E-commerce Giant",
-    description: "Boosted conversions by 65% with SEO + PPC campaigns.",
-    image: "/images/it-story-ecommerce.jpg",
-    imageClassName: "object-[50%_50%]",
+    title: "Mobile App Development",
+    description:
+      "Native and cross-platform mobile apps built to feel polished, reliable, and enterprise ready from day one.",
+    bullets: ["iOS + Android", "API integrated", "Scalable release flow"],
+    icon: <Smartphone className="h-5 w-5" />,
   },
   {
-    title: "Healthcare Innovator",
-    description: "Reduced costs by 30% using AI-driven automation.",
-    image: "/images/it-story-healthcare.jpg",
-    imageClassName: "object-[68%_50%]",
+    title: "Custom Software Development",
+    description:
+      "Purpose-built internal platforms, dashboards, and business tools aligned to your exact workflows and growth model.",
+    bullets: ["Bespoke logic", "Secure architecture", "Long-term support"],
+    icon: <Code2 className="h-5 w-5" />,
+  },
+  {
+    title: "AI Integration & Automation",
+    description:
+      "Practical automation systems that reduce manual effort, unify data, and make operations respond in real time.",
+    bullets: ["Agent workflows", "Chatbots", "Operational automation"],
+    icon: <Bot className="h-5 w-5" />,
+  },
+  {
+    title: "UI/UX Design",
+    description:
+      "Clarity-first product design with research, flows, wireframes, and interface systems that support adoption at scale.",
+    bullets: ["User journeys", "Design systems", "Prototype validation"],
+    icon: <Sparkles className="h-5 w-5" />,
+  },
+  {
+    title: "ERP & CRM Development",
+    description:
+      "Connected operations platforms that centralize sales, finance, inventory, attendance, and reporting in one place.",
+    bullets: ["ERP modules", "CRM logic", "Role-based access"],
+    icon: <BriefcaseBusiness className="h-5 w-5" />,
+  },
+  {
+    title: "SEO & Digital Marketing",
+    description:
+      "Data-driven visibility programs that connect technical SEO, high-intent content, and conversion-first landing flows.",
+    bullets: ["SEO strategy", "Performance content", "Lead funnels"],
+    icon: <Search className="h-5 w-5" />,
+  },
+  {
+    title: "PPC & Growth Campaigns",
+    description:
+      "Paid acquisition and performance loops optimized around measurable ROI, better lead quality, and shorter sales cycles.",
+    bullets: ["Paid media", "Tracking setup", "ROI optimization"],
+    icon: <MessageSquareCode className="h-5 w-5" />,
   },
 ];
 
-const sidePattern01 = "/images/it-services-side-01.svg";
-const sidePattern02 = "/images/it-services-side-02.svg";
-const sidePattern03 = "/images/it-services-side-03.svg";
-const sidePattern04 = "/images/it-services-side-04.svg";
-const sidePattern05 = "/images/it-services-side-05.svg";
-const sidePattern06 = "/images/it-services-side-06.svg";
-const sidePattern07 = "/images/it-services-side-07.svg";
-const sidePattern08 = "/images/it-services-side-08.svg";
+const products: ProductCard[] = [
+  {
+    title: "AI Attendance System",
+    description:
+      "Face-recognition attendance with live reporting, absentee alerts, and staff admin automation.",
+    badge: "Automation product",
+    icon: <ShieldCheck className="h-5 w-5" />,
+  },
+  {
+    title: "WhatsApp Automation Engine",
+    description:
+      "Lead capture, qualification, reminders, and follow-up flows triggered directly inside business conversations.",
+    badge: "Growth product",
+    icon: <Workflow className="h-5 w-5" />,
+  },
+  {
+    title: "AI Invoice & Billing Assistant",
+    description:
+      "Create, validate, and route invoices faster with approval paths, reminders, and finance visibility built in.",
+    badge: "Finance workflow",
+    icon: <Cpu className="h-5 w-5" />,
+  },
+  {
+    title: "HRMS + Payroll Suite",
+    description:
+      "Attendance, leave, payroll, employee lifecycle, and reporting tools designed for distributed operations.",
+    badge: "Operations system",
+    icon: <BriefcaseBusiness className="h-5 w-5" />,
+  },
+  {
+    title: "School Bus Tracking System",
+    description:
+      "Route intelligence, parent alerts, driver coordination, and student safety workflows in one dashboard.",
+    badge: "Mobility product",
+    icon: <MapPin className="h-5 w-5" />,
+  },
+  {
+    title: "POS Solution",
+    description:
+      "Retail-ready point-of-sale software with inventory sync, payment flow support, and analytics for daily decisions.",
+    badge: "Retail platform",
+    icon: <Globe className="h-5 w-5" />,
+  },
+];
 
-function SidePatternSegment({
-  src,
-  wrapperClassName,
-  sizeClassName,
-  opacityClassName,
-  bleedClassName = "inset-0",
+const projects: ProjectCard[] = [
+  {
+    title: "Synergy Innovation",
+    category: "Website revamp",
+    location: "India",
+    image: "/images/sy.png",
+    imageClassName: "object-cover",
+    titleClassName: "text-[#00adef] text-[24px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Singh Agro Agencies",
+    category: "B2B platform",
+    location: "India",
+    image: "/images/agro.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Night Owl Pizza",
+    category: "Food ordering",
+    location: "USA",
+    image: "/images/owl.png",
+    titleClassName: "text-[#00adef] text-[24px] font-bold leading-[1.2]",
+  },
+  {
+    title: "The Switchwords",
+    category: "Website Design",
+    location: "India",
+    image: "/images/switchword.png",
+    titleClassName: "text-[#00adef] text-[24px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Hey Hungry",
+    category: "App Design",
+    location: "India",
+    image: "/images/hey.png",
+    imageClassName: "object-contain p-5",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Damanhur Temples",
+    category: "Website Revamp",
+    location: "India",
+    image: "/images/damanhur.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Ficus e-Logic",
+    category: "Website Revamp",
+    location: "India",
+    image: "/images/ficus.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Santosh University",
+    category: "Website Revamp",
+    location: "India",
+    image: "/images/santosh.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "PGA Metropolitan Section",
+    category: "Website Design",
+    location: "USA",
+    image: "/images/pga.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "ASN Advances Sports Nutrition",
+    category: "Website Design",
+    location: "Australia",
+    image: "/images/asn.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Brownie Butter.",
+    category: "Website Revamp",
+    location: "UK",
+    image: "/images/ggb.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Okanagan CBD",
+    category: "Website Design",
+    location: "Canada",
+    image: "/images/cbd.png",
+    titleClassName: "text-[#00adef] text-[23.904px] font-bold leading-[1.2]",
+  },
+  {
+    title: "Thikedaar App & Website",
+    category: "Website + App",
+    description:
+      "Construction platform generating 3D home models and enabling service booking.",
+    location: "India",
+    image: "/images/thikedar (2).png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+  {
+    title: "Need To Assist App & Website",
+    category: "Website + App",
+    description:
+      "Service platform (like UrbanClap) for laptop repair with online booking and tracking.",
+    location: "India",
+    image: "/images/web.png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+  {
+    title: "Lisofy App",
+    category: "Mobile App",
+    description:
+      "Logistics/warehouse app with features for listing, truck booking, manpower, and land services.",
+    location: "India",
+    image: "/images/lisofy.png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+  {
+    title: "GVision AI Attendance",
+    category: "AI Product",
+    description:
+      "AI-based system with IP cameras for automated attendance and activity tracking.",
+    location: "India",
+    image: "/images/b2b.png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+  {
+    title: "eBuggs B2B Platform",
+    category: "B2B Platform",
+    description:
+      "E-commerce solution for refurbished laptops and digital products.",
+    location: "India",
+    image: "/images/b2.png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+  {
+    title: "3 Patti Gaming App",
+    category: "Gaming App",
+    description: "Ongoing maintenance and release management.",
+    location: "India",
+    image: "/images/3patti.png",
+    titleClassName: "text-[#00adef] text-[27.287px] font-bold leading-[1.2]",
+    descriptionClassName: "text-[15px] font-normal leading-[1.45] text-[#4d4d4d]",
+  },
+];
+
+const processSteps = [
+  {
+    number: "01",
+    title: "Discover",
+    description:
+      "Deep dive into your challenges, goals, and technical requirements. No assumptions, no templates.",
+  },
+  {
+    number: "02",
+    title: "Design",
+    description:
+      "Architecture, UI/UX wireframes, and technical blueprint. Approved by you before a single line of code.",
+  },
+  {
+    number: "03",
+    title: "Deploy",
+    description:
+      "Agile sprints, weekly demos, full transparency. 3x faster than industry average delivery timeline.",
+  },
+  {
+    number: "04",
+    title: "Scale",
+    description:
+      "Continuous optimisation, 24/7 support, and growth partnerships. We're here after launch — not just before.",
+  },
+];
+
+const testimonials: TestimonialCard[] = [
+  {
+    body:
+      "Synergy scaled our operations by 40% with a custom ERP. The team understood BFSI compliance requirements perfectly - delivered without a single delay.",
+    attribution: "AVP, Kotak Mahindra Bank",
+    company: "BFSI · Enterprise ERP",
+  },
+  {
+    body:
+      "The AI attendance system eliminated 3 hours of daily admin work. Our 800 students are marked automatically - parents get alerts before we even check.",
+    attribution: "Director, Delhi NCR School",
+    company: "Education · AI Attendance",
+  },
+  {
+    body:
+      "Went from chasing 50 leads manually every day to closing deals while we slept. The WhatsApp automation changed our entire sales operation in 2 weeks.",
+    attribution: "Founder, E-commerce Brand",
+    company: "Retail · AI Automation",
+  },
+];
+
+const contactItems = [
+  { label: "www.synergyinnovation.org", icon: Globe },
+  { label: "bd@synergyinnovation.org", icon: Mail },
+  { label: "+91 70173 86311", icon: Phone },
+  { label: "G Noida · Noida · Delhi · Bangalore", icon: MapPin },
+];
+
+const trustMetrics = [
+  { value: "< 24 hrs", label: "Response Time" },
+  { value: "Free", label: "Discovery Call" },
+  { value: "100%", label: "Custom-Coded" },
+];
+
+function SectionEyebrow({ children }: { children: ReactNode }) {
+  return (
+    <p className="text-[11px] font-extrabold uppercase tracking-[0.24em] text-[#00b4ff] sm:text-[12px]">
+      {children}
+    </p>
+  );
+}
+
+function PrimaryInquiryButton({
+  children,
+  className,
 }: {
-  src: string;
-  wrapperClassName: string;
-  sizeClassName: string;
-  opacityClassName: string;
-  bleedClassName?: string;
+  children: ReactNode;
+  className?: string;
 }) {
   return (
-    <div
-      className={`absolute flex items-center justify-center ${wrapperClassName}`}
-      aria-hidden
-    >
-      <div className={`-rotate-90 -scale-y-100 flex-none ${sizeClassName}`}>
-        <div className={`relative size-full ${opacityClassName}`}>
-          <div
-            className={`absolute bg-[length:100%_100%] bg-no-repeat ${bleedClassName}`}
-            style={{ backgroundImage: `url(${src})` }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ITServicesSidePattern({ right = false }: { right?: boolean }) {
-  return (
-    <div
-      className={`it-services-side-drift absolute top-0 hidden h-[2778.333px] w-[500px] lg:block ${right ? "right-0 -scale-x-100 it-services-side-drift-reverse" : "left-0"}`}
-      aria-hidden
-    >
-      <div className="relative h-full w-full">
-        <SidePatternSegment
-          src={sidePattern07}
-          wrapperClassName="inset-[0.24%_86.73%_74.17%_-19.44%]"
-          sizeClassName="h-[471.068px] w-[726.588px]"
-          opacityClassName="opacity-10"
-          bleedClassName="inset-[0_-0.21%]"
-        />
-        <SidePatternSegment
-          src={sidePattern08}
-          wrapperClassName="inset-[0.35%_84.72%_74.34%_-0.22%]"
-          sizeClassName="h-[223.136px] w-[718.76px]"
-          opacityClassName="opacity-10"
-        />
-        <SidePatternSegment
-          src={sidePattern05}
-          wrapperClassName="inset-[0.17%_86.59%_74.52%_-2.08%]"
-          sizeClassName="h-[223.136px] w-[718.76px]"
-          opacityClassName="opacity-2"
-        />
-        <SidePatternSegment
-          src={sidePattern06}
-          wrapperClassName="inset-[0_84.87%_74.42%_-17.58%]"
-          sizeClassName="h-[471.068px] w-[726.588px]"
-          opacityClassName="opacity-2"
-          bleedClassName="inset-[0_-0.21%]"
-        />
-        <SidePatternSegment
-          src={sidePattern01}
-          wrapperClassName="inset-[25.62%_85.05%_51.32%_-12.47%]"
-          sizeClassName="h-[394.905px] w-[654.927px]"
-          opacityClassName="opacity-10"
-          bleedClassName="inset-[0_-0.23%]"
-        />
-        <SidePatternSegment
-          src={sidePattern02}
-          wrapperClassName="inset-[25.92%_84.92%_51.25%_-2.69%]"
-          sizeClassName="h-[255.931px] w-[648.351px]"
-          opacityClassName="opacity-10"
-        />
-        <SidePatternSegment
-          src={sidePattern03}
-          wrapperClassName="inset-[25.85%_89.13%_51.09%_-16.55%]"
-          sizeClassName="h-[394.905px] w-[654.927px]"
-          opacityClassName="opacity-2"
-          bleedClassName="inset-[0_-0.23%]"
-        />
-        <SidePatternSegment
-          src={sidePattern04}
-          wrapperClassName="inset-[25.79%_89%_51.38%_-6.77%]"
-          sizeClassName="h-[255.931px] w-[648.351px]"
-          opacityClassName="opacity-2"
-        />
-        <SidePatternSegment
-          src={sidePattern07}
-          wrapperClassName="inset-[49.16%_86.73%_25.26%_-19.44%]"
-          sizeClassName="h-[471.068px] w-[726.588px]"
-          opacityClassName="opacity-10"
-          bleedClassName="inset-[0_-0.21%]"
-        />
-        <SidePatternSegment
-          src={sidePattern08}
-          wrapperClassName="inset-[49.26%_84.72%_25.43%_-0.22%]"
-          sizeClassName="h-[223.136px] w-[718.76px]"
-          opacityClassName="opacity-10"
-        />
-        <SidePatternSegment
-          src={sidePattern05}
-          wrapperClassName="inset-[49.08%_86.59%_25.61%_-2.08%]"
-          sizeClassName="h-[223.136px] w-[718.76px]"
-          opacityClassName="opacity-2"
-        />
-        <SidePatternSegment
-          src={sidePattern06}
-          wrapperClassName="inset-[48.91%_84.87%_25.5%_-17.58%]"
-          sizeClassName="h-[471.068px] w-[726.588px]"
-          opacityClassName="opacity-2"
-          bleedClassName="inset-[0_-0.21%]"
-        />
-        <SidePatternSegment
-          src={sidePattern01}
-          wrapperClassName="inset-[74.54%_85.05%_2.4%_-12.47%]"
-          sizeClassName="h-[394.905px] w-[654.927px]"
-          opacityClassName="opacity-10"
-          bleedClassName="inset-[0_-0.23%]"
-        />
-        <SidePatternSegment
-          src={sidePattern02}
-          wrapperClassName="inset-[74.84%_84.92%_2.34%_-2.69%]"
-          sizeClassName="h-[255.931px] w-[648.351px]"
-          opacityClassName="opacity-10"
-        />
-        <SidePatternSegment
-          src={sidePattern03}
-          wrapperClassName="inset-[74.77%_89.13%_2.17%_-16.55%]"
-          sizeClassName="h-[394.905px] w-[654.927px]"
-          opacityClassName="opacity-2"
-          bleedClassName="inset-[0_-0.23%]"
-        />
-        <SidePatternSegment
-          src={sidePattern04}
-          wrapperClassName="inset-[74.7%_89%_2.47%_-6.77%]"
-          sizeClassName="h-[255.931px] w-[648.351px]"
-          opacityClassName="opacity-2"
-        />
-      </div>
-    </div>
-  );
-}
-
-function FooterCta() {
-  return (
     <ITServicesInquiryTrigger
-      className="group inline-flex h-[50px] w-full items-center justify-between rounded-[25px] border-[0.5px] border-white pl-[24px] pr-[4px] text-[20px] font-semibold leading-[1.2] text-white transition-transform duration-300 hover:-translate-y-1 max-md:h-auto max-md:min-h-[58px] max-md:gap-4 max-md:pl-5 max-md:pr-2 max-md:text-[18px]"
+      className={`inline-flex min-h-[50px] items-center justify-center gap-2 rounded-full bg-[#18aef5] px-7 py-3 text-[15px] font-bold text-white shadow-[0_14px_30px_rgba(24,174,245,0.2)] transition-transform duration-300 hover:-translate-y-0.5 ${className ?? ""}`}
     >
-      <span className="max-md:text-left">Let&apos;s Begin Your Transformation Journey</span>
-      <img
-        src="/icons/Group.svg"
-        alt=""
-        className="h-[42px] w-[42px] shrink-0 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:rotate-45"
-      />
+      <span>{children}</span>
+      <ArrowRight className="h-4 w-4" />
     </ITServicesInquiryTrigger>
   );
 }
 
-function WhyIcon() {
+function ServiceCard({ bullets, description, icon, title }: ServiceCard) {
   return (
-    <span className="relative inline-block h-[34.201px] w-[34.201px]">
-      <img src="/icons/why-check-badge.svg" alt="" className="h-full w-full" />
-      <img src="/icons/why-check-mark.svg" alt="" className="absolute left-[9.19px] top-[12.19px] h-[11.374px] w-[15.806px]" />
-    </span>
-  );
-}
-
-type WhyCardProps = {
-  text: ReactNode;
-  widthClassName: string;
-};
-
-function WhyCard({ text, widthClassName }: WhyCardProps) {
-  return (
-    <article
-      className={`flex h-[104.2px] flex-col items-center text-center transition-transform duration-300 hover:-translate-y-2 ${widthClassName}`}
-    >
-      <WhyIcon />
-      <p className="mt-[16px] text-[20px] font-normal leading-[1.35] text-[#1d223f]">{text}</p>
+    <article className="rounded-[18px] border border-[#dff0f7] bg-[#f9fdff] p-6 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(20,34,56,0.08)]">
+      <div className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#e7f7ff] text-[#00b4ff]">
+        {icon}
+      </div>
+      <h3 className="mt-5 text-[21px] font-extrabold leading-[1.15] text-[#142238]">{title}</h3>
+      <p className="mt-3 text-[15px] leading-[1.65] text-[#4d4d4d]">{description}</p>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {bullets.map((bullet) => (
+          <span
+            key={bullet}
+            className="rounded-full border border-[#cfe8f3] bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-[#4d4d4d]"
+          >
+            {bullet}
+          </span>
+        ))}
+      </div>
     </article>
   );
 }
 
-const whyTopTexts: ReactNode[] = [
-  <>
-    12+ years of excellence
-    <br />
-    in IT &amp; Digital Solutions
-  </>,
-  <>
-    Expertise in BFSI, IT, Consulting,
-    <br />
-    Manufacturing, Healthcare &amp; Retail
-  </>,
-  <>
-    Trusted by Tier-1 MNCs &amp;
-    <br />
-    Fortune 500 enterprises
-  </>,
-];
+function ProductCard({ badge, description, icon, title }: ProductCard) {
+  return (
+    <article className="rounded-[18px] border border-[#dcf2f5] bg-white p-6 shadow-[0_18px_38px_rgba(20,34,56,0.04)]">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#eaf8ff] text-[#00b4ff]">
+          {icon}
+        </div>
+        <span className="rounded-full bg-[#e9fff5] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#4ade80]">
+          {badge}
+        </span>
+      </div>
+      <h3 className="mt-5 text-[22px] font-extrabold leading-[1.15] text-[#142238]">{title}</h3>
+      <p className="mt-3 text-[15px] leading-[1.65] text-[#4d4d4d]">{description}</p>
+    </article>
+  );
+}
 
-const whyBottomTexts: ReactNode[] = [
-  <>
-    Agile, scalable, and
-    <br />
-    technology-driven approach
-  </>,
-  <>
-    Global delivery model with
-    <br />
-    presence across 12+ countries
-  </>,
-];
+function ProjectCard({
+  category,
+  description,
+  descriptionClassName,
+  image,
+  imageClassName,
+  location,
+  title,
+  titleClassName,
+}: ProjectCard) {
+  return (
+    <article className="overflow-hidden rounded-[18px] border border-[#ebf2f5] bg-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_24px_46px_rgba(20,34,56,0.1)]">
+      <div className="relative aspect-[1.18/1] overflow-hidden bg-[#eef8fc]">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
+          className={`${imageClassName ?? "object-cover object-top"} transition-transform duration-500 hover:scale-[1.03]`}
+        />
+      </div>
+      <div className="space-y-2 p-5">
+        <div className="flex items-center justify-between gap-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[#4d4d4d]">
+          <span>{category}</span>
+          <span>{location}</span>
+        </div>
+        <h3 className={titleClassName ?? "text-[20px] font-extrabold leading-[1.2] text-[#142238]"}>{title}</h3>
+        {description ? (
+          <p className={descriptionClassName ?? "text-[15px] leading-[1.6] text-[#4d4d4d]"}>{description}</p>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
+function TestimonialCard({ attribution, body, company }: TestimonialCard) {
+  return (
+    <article className="rounded-[14px] border border-[rgba(0,173,239,0.1)] bg-[rgba(0,173,239,0.02)] px-8 pb-8 pt-8">
+      <div className="flex gap-1 text-[#28c0eb]">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Star key={index} className="h-5 w-5 fill-current stroke-0" />
+        ))}
+      </div>
+      <p className="mt-8 min-h-[104px] max-w-[304px] text-[16px] font-normal leading-[1.625] text-[#4d4d4d]">
+        {body}
+      </p>
+      <div className="mt-6 border-t border-[rgba(20,34,56,0.08)] pt-4">
+        <p className="text-[16px] font-normal leading-6 text-[#142238]">{attribution}</p>
+        <p className="mt-1 text-[14px] font-normal leading-5 text-[#4d4d4d]">{company}</p>
+      </div>
+    </article>
+  );
+}
 
 export const ITServicePage = () => {
   return (
-    <div className="w-full overflow-hidden bg-[#f5f7fa]">
-      <NavigationHeaderSection />
-      <main className="relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-[2368px] overflow-hidden lg:block" aria-hidden>
-          <ITServicesSidePattern />
-          <ITServicesSidePattern right />
+    <div className="bg-white font-[family:var(--font-manrope)] text-[#142238]">
+      <header className="relative z-20 border-b border-[rgba(20,34,56,0.08)] bg-white">
+        <div className="mx-auto flex max-w-[1251px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-0">
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/logo1 3.png"
+              alt="Synergy Innovation"
+              width={188}
+              height={44}
+              className="h-auto w-[154px] sm:w-[176px]"
+              priority
+            />
+          </Link>
+
+          <nav className="hidden items-center gap-7 lg:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`text-[14px] font-medium transition-colors duration-300 hover:text-[#00b4ff] ${
+                  item.href === "#services" ? "text-[#00b4ff]" : "text-[#4d4d4d]"
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <details className="group relative ml-auto lg:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full border border-[#d8ebf5] bg-[#f8fcff] text-[#142238] transition-colors duration-300 hover:border-[#00b4ff] hover:text-[#00b4ff]">
+              <Menu className="h-5 w-5" />
+            </summary>
+
+            <div className="absolute right-0 top-[calc(100%+12px)] z-30 w-[220px] rounded-[18px] border border-[#dfeef7] bg-white p-3 shadow-[0_18px_40px_rgba(20,34,56,0.12)]">
+              <nav className="flex flex-col">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-[12px] px-4 py-3 text-[14px] font-semibold text-[#4d4d4d] transition-colors duration-300 hover:bg-[#f4fbff] hover:text-[#00b4ff]"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </details>
+
+          <PrimaryInquiryButton className="max-lg:hidden lg:inline-flex">Get Free Audit</PrimaryInquiryButton>
         </div>
+      </header>
 
-        <section className="relative h-[501px] px-4 pb-10 pt-10 sm:px-6 lg:px-8 xl:px-10 max-md:h-auto max-md:pb-16 max-md:pt-6">
-          <div
-            className="it-services-soft-glow absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(0,173,239,0.04) 0%, rgba(0,173,239,0) 100%)",
-            }}
-          />
+      <main>
+        <section className="overflow-hidden">
+          <div className="mx-auto grid max-w-[1240px] gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-[minmax(0,1.02fr)_minmax(420px,0.98fr)] lg:px-0 lg:pb-16 lg:pt-[53px]">
+            <div className="max-w-[650px] pt-2 lg:pt-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#d7effa] bg-[#f5fbff] px-4 py-1.5 shadow-[0_4px_12px_rgba(0,173,239,0.05)]">
+                <span className="h-2 w-2 rounded-full bg-[#00b4ff]" />
+                <span className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-[#00b4ff]">
+                  AI-Driven IT Services
+                </span>
+              </div>
 
-          <div className="relative mx-auto flex w-full max-w-[1280px] flex-col items-center pt-[48px] text-center max-md:px-2 max-md:pt-0">
-            <FadeInView delay={0.04}>
-              <p className="inline-flex h-[61px] items-center rounded-[16px] bg-[rgba(0,173,239,0.06)] px-[32px] text-[24px] font-normal leading-[1.2] text-[#1d223f] max-md:h-auto max-md:w-full max-md:justify-center max-md:px-5 max-md:py-3 max-md:text-[16px]">
-                Enterprise-Grade Digital Solutions
-              </p>
-            </FadeInView>
-
-            <FadeInView delay={0.12}>
-              <h1 className="mt-[24px] w-[860px] max-w-full text-[60px] font-bold leading-[1.2] text-[#1d223f] max-md:w-full max-md:text-[clamp(2.35rem,11vw,3.15rem)] max-md:leading-[1.08]">
-                Transforming Ideas into
-                <br className="hidden md:block" />
-                Scalable Digital Excellence
+              <h1 className="mt-7 max-w-[620px] text-[42px] font-extrabold leading-[0.98] tracking-[-0.045em] text-[#142238] sm:text-[58px] lg:text-[66px]">
+                We Build Tech That
+                <span className="mt-1 block bg-[linear-gradient(169deg,#00b4ff_0%,#00ffc8_100%)] bg-clip-text text-transparent">
+                  Automates.
+                </span>
               </h1>
-            </FadeInView>
 
-            <FadeInView delay={0.2}>
-              <p className="mt-[32px] w-[1180.785px] max-w-full text-[24px] font-normal leading-[1.35] text-[#1d223f] max-md:w-full max-md:max-w-[22rem] max-md:text-[16px] max-md:leading-[1.5]">
-                We don&apos;t just build technology - we create future-ready solutions that empower businesses to grow,
-                compete, and lead. With over a decade of expertise, we combine creativity, strategy, and innovation to
-                deliver high-performance software and digital solutions tailored to modern enterprises.
+              <p className="mt-5 max-w-[600px] text-[18px] leading-[1.55] text-[#4d4d4d] sm:text-[20px]">
+                From custom websites to AI automation systems, Synergy Innovation delivers enterprise-grade digital
+                solutions built for speed, scale, and results. 100% custom code. Zero templates.
               </p>
-            </FadeInView>
 
-            <FadeInView delay={0.28} className="mt-[46px]">
-              <ITServicesTopCta />
-            </FadeInView>
-          </div>
-        </section>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="#services"
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-[#00b4ff] px-6 text-[14px] font-bold text-white shadow-[0_10px_20px_rgba(0,180,255,0.22)] transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  Explore Services
+                </a>
+                <ITServicesInquiryTrigger className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] border border-[#e6edf3] bg-white px-6 text-[14px] font-bold text-[#142238] transition-colors duration-300 hover:border-[#00b4ff] hover:text-[#00b4ff]">
+                  Get Free Audit
+                </ITServicesInquiryTrigger>
+              </div>
 
-        <section className="mt-[120px] max-md:mt-16">
-          <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center px-4 sm:px-6 lg:px-8 xl:px-10">
-            <FadeInView>
-              <h2 className="text-center text-[46px] font-bold leading-[1.2] text-[#1d223f] max-md:text-[38px]">
-                Our Expertise
-              </h2>
-            </FadeInView>
-            <FadeInView delay={0.08}>
-              <div className="mt-[24px] h-[6px] w-[200px] rounded-[3px] bg-[#00adef]" />
-            </FadeInView>
-          </div>
-
-          <FadeInView delay={0.14}>
-            <ITServicesExpertiseSection />
-          </FadeInView>
-        </section>
-
-        <section className="mt-[120px] max-md:mt-16">
-          <div className="mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8">
-            <FadeInView>
-              <h2 className="text-center text-[46px] font-bold leading-[1.2] text-[#1d223f] max-md:text-[38px] md:whitespace-nowrap">
-                Why Synergy Innovation?
-              </h2>
-            </FadeInView>
-            <FadeInView delay={0.08}>
-              <div className="mx-auto mt-[24px] h-[6px] w-[200px] rounded-[3px] bg-[#00adef]" />
-            </FadeInView>
-
-            <div className="relative mt-[46px] hidden h-[104.201px] w-[983.855px] max-w-full lg:block">
-              <FadeInView className="absolute left-0 top-0 w-[213.309px]" delay={0.06}>
-                <WhyCard text={whyTopTexts[0]} widthClassName="w-[213.309px]" />
-              </FadeInView>
-              <span className="absolute left-[259.309px] top-[2.1px] h-[100px] w-px bg-black/20" aria-hidden />
-              <FadeInView className="absolute left-[306.309px] top-0 w-[352.02px]" delay={0.14}>
-                <WhyCard text={whyTopTexts[1]} widthClassName="w-[352.02px]" />
-              </FadeInView>
-              <span className="absolute left-[704.329px] top-[2.1px] h-[100px] w-px bg-black/20" aria-hidden />
-              <FadeInView className="absolute left-[751.329px] top-0 w-[232.527px]" delay={0.22}>
-                <WhyCard text={whyTopTexts[2]} widthClassName="w-[232.527px]" />
-              </FadeInView>
-            </div>
-
-            <div className="mt-[46px] grid gap-y-8 lg:hidden">
-              <FadeInView delay={0.06}>
-                <WhyCard text={whyTopTexts[0]} widthClassName="w-full" />
-              </FadeInView>
-              <FadeInView delay={0.14}>
-                <WhyCard text={whyTopTexts[1]} widthClassName="w-full" />
-              </FadeInView>
-              <FadeInView delay={0.22}>
-                <WhyCard text={whyTopTexts[2]} widthClassName="w-full" />
-              </FadeInView>
-            </div>
-
-            <div className="relative mx-auto mt-[46px] hidden h-[104.201px] w-[669.508px] max-w-full lg:block">
-              <FadeInView className="absolute left-0 top-0 w-[280.625px]" delay={0.12}>
-                <WhyCard text={whyBottomTexts[0]} widthClassName="w-[280.625px]" />
-              </FadeInView>
-              <span className="absolute left-[326.625px] top-[2.1px] h-[100px] w-px bg-black/20" aria-hidden />
-              <FadeInView className="absolute left-[373.625px] top-0 w-[295.883px]" delay={0.2}>
-                <WhyCard text={whyBottomTexts[1]} widthClassName="w-[295.883px]" />
-              </FadeInView>
-            </div>
-
-            <div className="mx-auto mt-[46px] grid gap-y-8 lg:hidden">
-              <FadeInView delay={0.12}>
-                <WhyCard text={whyBottomTexts[0]} widthClassName="w-full" />
-              </FadeInView>
-              <FadeInView delay={0.2}>
-                <WhyCard text={whyBottomTexts[1]} widthClassName="w-full" />
-              </FadeInView>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-[120px] max-md:mt-16">
-          <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center px-4 sm:px-6 lg:px-8 xl:px-10">
-            <FadeInView>
-              <h2 className="text-center text-[46px] font-bold leading-[1.2] text-[#1d223f] max-md:text-[38px] md:whitespace-nowrap">
-                Client Success Stories
-              </h2>
-            </FadeInView>
-            <FadeInView delay={0.08}>
-              <div className="mt-[24px] h-[6px] w-[200px] rounded-[3px] bg-[#00adef]" />
-            </FadeInView>
-          </div>
-
-          <div
-            className="mt-[46px] w-full px-4 py-0 sm:px-6 lg:px-8 xl:px-10"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(0,173,239,0) 0%, rgba(0,173,239,0.06) 40%, rgba(0,173,239,0.06) 60%, rgba(0,173,239,0) 100%)",
-            }}
-          >
-            <div className="mx-auto grid w-full max-w-[1240px] grid-cols-1 gap-[20px] lg:grid-cols-3">
-              {stories.map((story, index) => (
-                <FadeInView key={story.title} delay={0.08 * index}>
-                  <article className="group h-[360px] w-full overflow-hidden rounded-[8px] bg-white transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_rgba(29,34,63,0.14)]">
-                  <div className="relative h-[186px] w-full overflow-hidden rounded-t-[8px]">
-                    <Image
-                      src={story.image}
-                      alt={story.title}
-                      fill
-                      sizes="(max-width: 1023px) 100vw, 33vw"
-                      quality={72}
-                      className={`object-cover transition-transform duration-500 group-hover:scale-105 ${story.imageClassName}`}
-                    />
-                  </div>
-                  <div className="px-[17.5px] pt-[30.5px]">
-                    <h3 className="text-[24px] font-semibold leading-[1.2] text-[#00adef]">{story.title}</h3>
-                    <div className="mt-[16.5px] h-[0.5px] w-[200px] bg-[linear-gradient(90deg,#1d223f_0%,rgba(29,34,63,0)_100%)]" />
-                    <p className="mt-[16px] text-[18px] font-normal leading-[1.4] text-[#1d223f]">
-                      {story.description}
+              <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-[#e8f0f4] pt-8 sm:grid-cols-4">
+                {heroMetrics.map((metric) => (
+                  <div key={metric.label}>
+                    <p className="text-[31px] font-extrabold tracking-[-0.04em] text-[#00b4ff] sm:text-[42px]">
+                      {metric.value}
+                    </p>
+                    <p className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#4d4d4d]">
+                      {metric.label}
                     </p>
                   </div>
-                  </article>
-                </FadeInView>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="relative mx-auto min-h-[420px] max-w-[520px] lg:min-h-[430px]">
+                <div className="absolute right-[-72px] top-[0px] z-20 h-[100px] w-[209px] rounded-[14px] border border-[rgba(74,222,128,0.3)] bg-white shadow-[0_8px_16px_rgba(74,222,128,0.2)]">
+                  <div className="flex items-center gap-2 pl-[16px] pt-[16px] text-[11px] font-semibold uppercase leading-[16.5px] text-[#4ade80]">
+                    <span className="h-[8px] w-[8px] rounded-full bg-[#4ade80] shadow-[0_0_10px_#4ade80]" />
+                    Live
+                  </div>
+                  <p className="pl-[16px] pt-[12px] text-[13px] font-normal leading-[19.5px] text-black">AI Systems Active</p>
+                  <p className="pl-[16px] pt-[4px] text-[12px] font-normal leading-[18px] text-[#4d4d4d]">
+                    Running 24/7 · 80% automated
+                  </p>
+                </div>
+
+                <div className="absolute left-[22px] top-[262px] z-20 h-[123px] w-[151px] rounded-[14px] border border-[#00b4ff] bg-white shadow-[0_8px_16px_rgba(14,165,233,0.2)]">
+                  <p className="pl-[16px] pt-[16px] text-[32px] font-bold leading-[48px] text-[#00b4ff]">100+</p>
+                  <p className="pl-[16px] pt-[0px] text-[13px] font-normal leading-[19.5px] text-black">Projects Delivered</p>
+                  <p className="pl-[16px] pt-[4px] text-[12px] font-normal leading-[18px] text-[#4d4d4d]">Across 15+ industries</p>
+                </div>
+
+                <div className="absolute right-[0px] top-[288px] z-20 h-[159px] w-[175px] rounded-[14px] border border-[rgba(129,140,248,0.3)] bg-white px-[16.8px] pt-[16.8px] shadow-[0_8px_16px_rgba(129,140,248,0.2)]">
+                  <div className="relative h-[124px] w-[139px] overflow-hidden rounded-b-[36px]">
+                    <Image
+                      src="/images/iwc.png"
+                      alt="Incredible Workplaces Certified India badge"
+                      fill
+                      sizes="139px"
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+
+                <div className="absolute left-[108px] top-[18px] h-[348px] w-[348px] rounded-[36px] bg-[radial-gradient(circle_at_center,rgba(0,173,239,0.12),rgba(255,255,255,0)_72%)]" />
+                <div className="absolute left-[116px] top-[8px] z-10 h-[352px] w-[352px]">
+                  <Image
+                    src="/images/aichip.png"
+                    alt="AI chip and automation illustration"
+                    fill
+                    sizes="(max-width: 1023px) 280px, 352px"
+                    className="object-contain drop-shadow-[0_24px_42px_rgba(0,173,239,0.1)]"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+          <SectionEyebrow>IT Products & Services</SectionEyebrow>
+          <h2 className="mt-4 max-w-[840px] text-[34px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142238] sm:text-[48px] lg:text-[56px]">
+            Full-Spectrum Digital Engineering.
+            <span className="block">Every Service. Enterprise Grade.</span>
+          </h2>
+          <p className="mt-5 max-w-[620px] text-[18px] leading-[1.7] text-[#4d4d4d]">
+            100% custom built. No templates, no page builders. Every solution is architected around your business
+            logic and built to scale cleanly.
+          </p>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {services.map((service) => (
+              <div key={service.title}>
+                <ServiceCard {...service} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="products" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+          <SectionEyebrow>AI Products</SectionEyebrow>
+          <h2 className="mt-4 max-w-[900px] text-[34px] font-extrabold leading-[1.06] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
+            Intelligent Systems Built for Your Operations.
+            <span className="block">Built Once. Runs Forever.</span>
+          </h2>
+          <p className="mt-5 max-w-[720px] text-[18px] leading-[1.7] text-[#4d4d4d]">
+            No SaaS lock-in, no subscriptions, and no unnecessary complexity. We build durable systems your team can
+            actually own.
+          </p>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {products.map((product) => (
+              <div key={product.title}>
+                <ProductCard {...product} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="projects" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+          <SectionEyebrow>Our Work</SectionEyebrow>
+          <h2 className="mt-4 text-[34px] font-extrabold leading-[1.04] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
+            100+ Projects.
+            <span className="block">Real Results.</span>
+          </h2>
+          <p className="mt-5 max-w-[620px] text-[20px] font-light leading-[1.36] text-[#4d4d4d]">
+            From university platforms to gaming apps to global sports organisations — we&apos;ve built across every
+            industry.
+          </p>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {projects.map((project) => (
+              <div key={project.title}>
+                <ProjectCard {...project} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="process" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-0 lg:py-20">
+          <div className="text-center">
+            <SectionEyebrow>WHY WE WORK</SectionEyebrow>
+          </div>
+          <div className="mx-auto max-w-[760px] text-center">
+            <h2 className="mt-4 text-[34px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
+              From Brief to Live.
+              <span className="block">In Weeks.</span>
+            </h2>
+            <p className="mt-5 text-[18px] leading-[1.7] text-[#4d4d4d]">
+              Our stage-based process balances clarity and speed so execution never drifts away from business value.
+            </p>
+          </div>
+
+          <div className="relative mt-14">
+            <div className="absolute left-1/2 top-[31px] hidden h-px w-[73%] -translate-x-1/2 bg-[rgba(0,180,255,0.22)] xl:block" />
+            <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-4 xl:gap-[48px]">
+              {processSteps.map((step) => (
+                <article key={step.number} className="relative mx-auto max-w-[245px] text-center">
+                  <div className="mx-auto flex h-[62px] w-[62px] items-center justify-center rounded-full border border-[rgba(0,180,255,0.22)] bg-[#00b4ff] text-[31px] font-extrabold leading-none text-white">
+                    {step.number}
+                  </div>
+                  <h3 className="mt-6 text-[20px] font-bold leading-[1.5] text-[#142238]">{step.title}</h3>
+                  <p className="mt-2 text-[14.4px] font-normal leading-[1.6] text-[#4d4d4d]">
+                    {step.description}
+                  </p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="relative mt-[68px] min-h-[471.598px] overflow-hidden bg-[#1d223f]">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
-            <Image
-              src="/images/it-services-footer-bg.jpg"
-              alt=""
-              fill
-              sizes="100vw"
-              quality={68}
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-[rgba(29,34,63,0.86)]" />
+        <section id="testimonials" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-0 lg:py-16">
+          <div className="text-center">
+            <SectionEyebrow>Client Stories</SectionEyebrow>
+            <h2 className="mt-4 text-[34px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
+              What Our Clients Say
+            </h2>
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-[900px] flex-col items-center px-4 pb-[120px] pt-[120px] text-center sm:px-6 lg:px-8 max-md:py-16">
-            <FadeInView>
-              <h2 className="max-w-[760px] text-[46px] font-bold leading-[1.2] text-white max-md:max-w-[320px] max-md:text-[32px] max-md:leading-[1.15] md:whitespace-nowrap">
-                Let&apos;s Build the Future Together
-              </h2>
-            </FadeInView>
-            <FadeInView delay={0.08}>
-              <p className="mx-auto mt-[24px] w-[683.141px] max-w-full text-[24px] font-normal leading-[1.35] text-white/80 max-md:w-full max-md:max-w-[340px] max-md:text-[17px] max-md:leading-[1.5]">
-                Partner with Synergy Innovation to unlock next-gen software solutions that redefine business excellence.
-              </p>
-            </FadeInView>
-            <FadeInView delay={0.16} className="mt-[38px] w-full max-w-[467.214px]">
-              <FooterCta />
-            </FadeInView>
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.attribution}>
+                <TestimonialCard {...testimonial} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-white">
+          <div className="mx-auto max-w-[1240px] px-4 py-16 text-center sm:px-6 lg:px-0 lg:pb-[88px] lg:pt-[92px]">
+            <div className="mx-auto inline-flex items-center gap-3 rounded-full border border-[#bfe8fb] bg-[#f5fbff] px-4 py-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#00b4ff]" />
+              <span className="text-[12px] font-extrabold uppercase tracking-[0.18em] text-[#00b4ff]">
+                LET&apos;S BUILD THE FUTURE TOGETHER
+              </span>
+            </div>
+
+            <h2 className="mt-8 text-[34px] font-extrabold leading-[1.02] tracking-[-0.04em] text-[#142238] sm:text-[48px] lg:text-[56px]">
+              Ready to Build
+              <span className="block bg-[linear-gradient(169deg,#00b4ff_0%,#00ffc8_100%)] bg-clip-text text-transparent">
+                Something That Lasts?
+              </span>
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-[1080px] text-[18px] font-light leading-[1.7] text-[#4d4d4d]">
+              Free 30-minute digital audit. We&apos;ll map exactly which tech investments will drive the highest ROI
+              for your business — no pitch, no commitment.
+            </p>
+
+            <div className="mt-10">
+              <PrimaryInquiryButton>Start a Conversation</PrimaryInquiryButton>
+            </div>
+
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-x-7 gap-y-4 text-[14px] text-[#4d4d4d]">
+              {contactItems.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <span key={item.label} className="inline-flex items-center gap-3">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] border border-[#dfeaf0] bg-[#fbfdff]">
+                      <Icon className="h-4 w-4 text-[#8aa1b4]" />
+                    </span>
+                    <span>{item.label}</span>
+                  </span>
+                );
+              })}
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-start justify-center gap-x-12 gap-y-6">
+              {trustMetrics.map((metric) => (
+                <div key={metric.label} className="min-w-[88px] text-center">
+                  <p className="text-[18px] font-extrabold text-[#00a8ff]">{metric.value}</p>
+                  <p className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#617891]">
+                    {metric.label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>
