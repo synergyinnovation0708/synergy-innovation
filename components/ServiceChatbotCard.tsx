@@ -19,19 +19,33 @@ type ChatTurn = {
   text: string;
 };
 
+type ServiceChatbotCardProps = {
+  headerEyebrow?: string;
+  headerTitle?: string;
+  initialAssistantMessage?: string;
+  starterPrompts?: string[];
+  teaserText?: string;
+};
+
 const serviceChatInputMaxChars = 500;
 
-const starterPrompts = [
+const defaultStarterPrompts = [
   "What job opportunities are available right now?",
   "How can you help me hire candidates quickly?",
   "Tell me about your IT services and AI offerings",
   "What is included in your branding services?",
 ];
 
-const initialAssistantMessage =
+const defaultInitialAssistantMessage =
   "Hi! I'm SynergyBot. You can ask me about jobs, hiring, IT services, branding, AI solutions, the AI IP Camera system, or the School Bus platform.";
 
-export const ServiceChatbotCard = () => {
+export const ServiceChatbotCard = ({
+  headerEyebrow = "Conversation with SynergyBot",
+  headerTitle = "Interactive Service Assistant",
+  initialAssistantMessage = defaultInitialAssistantMessage,
+  starterPrompts = defaultStarterPrompts,
+  teaserText = "Ask about Synergy services",
+}: ServiceChatbotCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatTurn[]>([
     {
@@ -142,16 +156,16 @@ export const ServiceChatbotCard = () => {
           <div className="flex items-center justify-between gap-3 border-b border-[#edf2f8] bg-[linear-gradient(135deg,#f5fbff_0%,#ffffff_55%,#ecfaf6_100%)] px-5 py-4">
             <div className="min-w-0">
               <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#00adef]">
-                Conversation with SynergyBot
+                {headerEyebrow}
               </p>
               <p className="mt-1 text-[15px] font-semibold text-[#1d223f]">
-                Interactive Service Assistant
+                {headerTitle}
               </p>
             </div>
             <button
               type="button"
               aria-label="Close chatbot"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#d9e6ef] bg-white text-[#1d223f] transition-colors duration-200 hover:bg-[#f6f9fc]"
+              className="inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#d9e6ef] bg-white text-[#1d223f] transition-colors duration-200 hover:bg-[#f6f9fc]"
               onClick={() => setIsOpen(false)}
             >
               <X className="h-4 w-4" />
@@ -193,7 +207,7 @@ export const ServiceChatbotCard = () => {
                         key={prompt}
                         type="button"
                         disabled={isLoading}
-                        className="rounded-full border border-[#dbe6f2] bg-white px-3 py-2 text-left text-[12px] font-medium text-[#1d223f] transition-colors duration-200 hover:bg-[#f5fbff] disabled:cursor-not-allowed disabled:opacity-70"
+                        className="cursor-pointer rounded-full border border-[#dbe6f2] bg-white px-3 py-2 text-left text-[12px] font-medium text-[#1d223f] transition-colors duration-200 hover:bg-[#f5fbff] disabled:cursor-not-allowed disabled:opacity-70"
                         onClick={() => void sendMessage(prompt)}
                       >
                         {prompt}
@@ -235,7 +249,7 @@ export const ServiceChatbotCard = () => {
                 type="button"
                 aria-label="Send message"
                 disabled={isLoading}
-                className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#1d223f] text-white shadow-[0_18px_34px_rgba(29,34,63,0.24)] transition-colors duration-200 hover:bg-[#2a3158] disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex h-14 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#1d223f] text-white shadow-[0_18px_34px_rgba(29,34,63,0.24)] transition-colors duration-200 hover:bg-[#2a3158] disabled:cursor-not-allowed disabled:opacity-70"
                 onClick={() => void sendMessage(inputValue)}
               >
                 <SendHorizonal className="h-5 w-5" />
@@ -260,7 +274,7 @@ export const ServiceChatbotCard = () => {
         <button
           type="button"
           aria-label={isOpen ? "Chatbot open" : "Open chatbot"}
-          className={`group inline-flex h-[74px] w-[74px] items-center justify-center rounded-full border border-[#1d223f] bg-[#1d223f] text-white shadow-[0_22px_46px_rgba(29,34,63,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#2a3158] ${
+          className={`group inline-flex h-[74px] w-[74px] cursor-pointer items-center justify-center rounded-full border border-[#1d223f] bg-[#1d223f] text-white shadow-[0_22px_46px_rgba(29,34,63,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#2a3158] ${
             isOpen ? "pointer-events-none scale-90 opacity-0" : ""
           }`}
           onClick={() => setIsOpen(true)}
@@ -274,7 +288,7 @@ export const ServiceChatbotCard = () => {
         </button>
         {!isOpen ? (
           <div className="pointer-events-none absolute -left-[184px] top-1/2 hidden -translate-y-1/2 rounded-full border border-[#dbe6f2] bg-white/96 px-4 py-2 text-[13px] font-medium text-[#1d223f] shadow-[0_12px_30px_rgba(18,30,61,0.12)] md:block">
-            Ask about Synergy services
+            {teaserText}
           </div>
         ) : null}
       </div>

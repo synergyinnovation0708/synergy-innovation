@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ServiceChatbotCard } from "@/components/ServiceChatbotCard";
 import {
   ArrowRight,
   Bot,
@@ -492,7 +493,7 @@ function TestimonialCard({ attribution, body, company }: TestimonialCard) {
         {body}
       </p>
       <div className="mt-6 border-t border-[rgba(20,34,56,0.08)] pt-4">
-        <p className="text-[16px] font-normal leading-6 text-[#142238]">{attribution}</p>
+        <p className="text-[16px] font-semibold leading-6 text-[#142238]">{attribution}</p>
         <p className="mt-1 text-[14px] font-normal leading-5 text-[#4d4d4d]">{company}</p>
       </div>
     </article>
@@ -502,18 +503,42 @@ function TestimonialCard({ attribution, body, company }: TestimonialCard) {
 export const ITServicePage = () => {
   return (
     <div className="bg-white font-[family:var(--font-manrope)] text-[#142238]">
+      <ServiceChatbotCard
+        initialAssistantMessage="Hi! I'm SynergyBot. I can guide you through Synergy Innovation's IT services, AI products, custom software, automation solutions, and the best next step for your business."
+        starterPrompts={[
+          "Which IT service is best for my business?",
+          "Tell me about your AI products and automation solutions",
+          "Can you build custom software, ERP, or CRM systems?",
+          "What happens in the free audit or discovery call?",
+        ]}
+      />
+      <ITServicesInquiryTrigger
+        className="hidden"
+        autoOpenAfterMs={90000}
+      />
       <header className="relative z-20 border-b border-[rgba(20,34,56,0.08)] bg-white">
         <div className="mx-auto flex max-w-[1251px] items-center justify-between gap-6 px-4 py-4 sm:px-6 lg:px-0">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/logo1 3.png"
-              alt="Synergy Innovation"
-              width={188}
-              height={44}
-              className="h-auto w-[154px] sm:w-[176px]"
-              priority
-            />
-          </Link>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/images/logo1 3.png"
+                alt="Synergy Innovation"
+                width={188}
+                height={44}
+                className="h-auto w-[154px] sm:w-[176px]"
+                priority
+              />
+            </Link>
+            <div className="relative h-[52px] w-[58px] shrink-0 overflow-hidden rounded-[8px] border border-[rgba(129,140,248,0.2)] bg-white shadow-[0_6px_16px_rgba(129,140,248,0.14)]">
+              <Image
+                src="/images/iwc.png"
+                alt="Incredible Workplaces Certified India badge"
+                fill
+                sizes="58px"
+                className="object-cover object-top"
+              />
+            </div>
+          </div>
 
           <nav className="hidden items-center gap-7 lg:flex">
             {navItems.map((item) => (
@@ -577,14 +602,11 @@ export const ITServicePage = () => {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#services"
-                  className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-[#00b4ff] px-6 text-[14px] font-bold text-white shadow-[0_10px_20px_rgba(0,180,255,0.22)] transition-transform duration-300 hover:-translate-y-0.5"
-                >
-                  Explore Services
-                </a>
-                <ITServicesInquiryTrigger className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] border border-[#e6edf3] bg-white px-6 text-[14px] font-bold text-[#142238] transition-colors duration-300 hover:border-[#00b4ff] hover:text-[#00b4ff]">
+                <ITServicesInquiryTrigger className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] bg-[#00b4ff] px-6 text-[14px] font-bold text-white shadow-[0_10px_20px_rgba(0,180,255,0.22)] transition-transform duration-300 hover:-translate-y-0.5">
                   Get Free Audit
+                </ITServicesInquiryTrigger>
+                <ITServicesInquiryTrigger className="inline-flex min-h-[48px] items-center justify-center rounded-[6px] border border-[#e6edf3] bg-white px-6 text-[14px] font-bold text-[#142238] transition-colors duration-300 hover:border-[#00b4ff] hover:text-[#00b4ff]">
+                  Contact Us
                 </ITServicesInquiryTrigger>
               </div>
 
@@ -621,18 +643,6 @@ export const ITServicePage = () => {
                   <p className="pl-[16px] pt-[4px] text-[12px] font-normal leading-[18px] text-[#4d4d4d]">Across 15+ industries</p>
                 </div>
 
-                <div className="absolute right-[0px] top-[288px] z-20 h-[159px] w-[175px] rounded-[14px] border border-[rgba(129,140,248,0.3)] bg-white px-[16.8px] pt-[16.8px] shadow-[0_8px_16px_rgba(129,140,248,0.2)]">
-                  <div className="relative h-[124px] w-[139px] overflow-hidden rounded-b-[36px]">
-                    <Image
-                      src="/images/iwc.png"
-                      alt="Incredible Workplaces Certified India badge"
-                      fill
-                      sizes="139px"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-
                 <div className="absolute left-[108px] top-[18px] h-[348px] w-[348px] rounded-[36px] bg-[radial-gradient(circle_at_center,rgba(0,173,239,0.12),rgba(255,255,255,0)_72%)]" />
                 <div className="absolute left-[116px] top-[8px] z-10 h-[352px] w-[352px]">
                   <Image
@@ -650,14 +660,13 @@ export const ITServicePage = () => {
         </section>
 
         <section id="services" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-          <SectionEyebrow>IT Products & Services</SectionEyebrow>
-          <h2 className="mt-4 max-w-[840px] text-[34px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142238] sm:text-[48px] lg:text-[56px]">
-            Full-Spectrum Digital Engineering.
+          <SectionEyebrow>IT PRODUCTS & SERVICES</SectionEyebrow>
+          <h2 className="mt-4 max-w-[1040px] text-[34px] font-extrabold leading-[1.04] tracking-[-0.045em] text-[#142238] sm:text-[48px] lg:text-[56px]">
+            <span className="block">Full-Spectrum Digital Engineering.</span>
             <span className="block">Every Service. Enterprise Grade.</span>
           </h2>
           <p className="mt-5 max-w-[620px] text-[18px] leading-[1.7] text-[#4d4d4d]">
-            100% custom built. No templates, no page builders. Every solution is architected around your business
-            logic and built to scale cleanly.
+            100% coding-based. Fully customizable. Built for long-term growth.
           </p>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -670,14 +679,14 @@ export const ITServicePage = () => {
         </section>
 
         <section id="products" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
-          <SectionEyebrow>AI Products</SectionEyebrow>
-          <h2 className="mt-4 max-w-[900px] text-[34px] font-extrabold leading-[1.06] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
-            Intelligent Systems Built for Your Operations.
+          <SectionEyebrow>AI PRODUCTS</SectionEyebrow>
+          <h2 className="mt-4 max-w-[1220px] text-[34px] font-extrabold leading-[1.04] tracking-[-0.045em] text-[#142238] sm:text-[48px]">
+            <span className="block">Intelligent Systems Built for Your Operations.</span>
             <span className="block">Built Once. Runs Forever.</span>
           </h2>
-          <p className="mt-5 max-w-[720px] text-[18px] leading-[1.7] text-[#4d4d4d]">
-            No SaaS lock-in, no subscriptions, and no unnecessary complexity. We build durable systems your team can
-            actually own.
+          <p className="mt-5 max-w-[760px] text-[18px] leading-[1.7] text-[#4d4d4d]">
+            Not SaaS. Not subscriptions. Fully owned, deployed and supported by our team. These are live AI products
+            running in businesses right now.
           </p>
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -711,7 +720,7 @@ export const ITServicePage = () => {
 
         <section id="process" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-0 lg:py-20">
           <div className="text-center">
-            <SectionEyebrow>WHY WE WORK</SectionEyebrow>
+            <SectionEyebrow>HOW WE WORK</SectionEyebrow>
           </div>
           <div className="mx-auto max-w-[760px] text-center">
             <h2 className="mt-4 text-[34px] font-extrabold leading-[1.05] tracking-[-0.04em] text-[#142238] sm:text-[48px]">
@@ -767,14 +776,14 @@ export const ITServicePage = () => {
               </span>
             </div>
 
-            <h2 className="mt-8 text-[34px] font-extrabold leading-[1.02] tracking-[-0.04em] text-[#142238] sm:text-[48px] lg:text-[56px]">
-              Ready to Build
-              <span className="block bg-[linear-gradient(169deg,#00b4ff_0%,#00ffc8_100%)] bg-clip-text text-transparent">
+            <h2 className="mt-8 flex flex-col items-center pb-2 text-[34px] font-extrabold leading-[1.06] tracking-[-0.04em] text-[#142238] sm:text-[48px] lg:text-[56px]">
+              <span className="block">Ready to Build</span>
+              <span className="mt-2 inline-block pb-[0.12em] leading-[1.06] [filter:drop-shadow(0_0_0_transparent)] bg-[linear-gradient(169deg,#00b4ff_0%,#00ffc8_100%)] bg-clip-text text-transparent">
                 Something That Lasts?
               </span>
             </h2>
 
-            <p className="mx-auto mt-5 max-w-[1080px] text-[18px] font-light leading-[1.7] text-[#4d4d4d]">
+            <p className="mx-auto mt-5 max-w-[780px] text-balance text-[18px] font-light leading-[1.7] text-[#4d4d4d]">
               Free 30-minute digital audit. We&apos;ll map exactly which tech investments will drive the highest ROI
               for your business — no pitch, no commitment.
             </p>

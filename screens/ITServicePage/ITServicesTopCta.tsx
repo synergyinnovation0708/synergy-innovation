@@ -29,6 +29,8 @@ const getFieldClassName = (hasError: boolean) =>
   `${inputClassName} ${hasError ? "border-[#dc2626] focus:border-[#dc2626]" : ""}`;
 
 type ITServicesInquiryTriggerProps = {
+  autoOpenAfterMs?: number;
+  autoOpenStorageKey?: string;
   children?: ReactNode;
   className?: string;
 };
@@ -88,6 +90,8 @@ const TextField = ({
 );
 
 export const ITServicesInquiryTrigger = ({
+  autoOpenAfterMs,
+  autoOpenStorageKey = "it-services-inquiry-auto-opened",
   children,
   className = triggerClassName,
 }: ITServicesInquiryTriggerProps) => {
@@ -120,8 +124,35 @@ export const ITServicesInquiryTrigger = ({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (!autoOpenAfterMs || typeof window === "undefined") {
+      return;
+    }
+
+    if (window.sessionStorage.getItem(autoOpenStorageKey) === "true") {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      window.sessionStorage.setItem(autoOpenStorageKey, "true");
+      setIsOpen(true);
+    }, autoOpenAfterMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [autoOpenAfterMs, autoOpenStorageKey]);
+
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const openModal = () => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(autoOpenStorageKey, "true");
+    }
+
+    setIsOpen(true);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -411,7 +442,7 @@ export const ITServicesInquiryTrigger = ({
     <>
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={openModal}
         className={`${className} cursor-pointer`}
       >
         {children ?? (
