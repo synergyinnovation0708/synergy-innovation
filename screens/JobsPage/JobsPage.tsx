@@ -14,6 +14,7 @@ import {
   SlidersHorizontal,
   Users,
   X,
+  Share2,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -183,12 +184,14 @@ const JobCard = ({
   job,
   onApply,
   onViewDetails,
+  onShare,
 }: {
   hasApplied: boolean;
   isApplying: boolean;
   job: PublicJobListing;
   onApply: () => void;
   onViewDetails: () => void;
+  onShare: () => void;
 }) => (
   <article className="overflow-hidden rounded-[30px] border border-[#dbe7f2] bg-white shadow-[0_18px_48px_rgba(29,34,63,0.08)]">
     <div
@@ -298,6 +301,14 @@ const JobCard = ({
         </div>
 
         <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={onShare}
+            aria-label="Share job"
+            className="inline-flex h-[46px] w-[46px] items-center justify-center rounded-full border border-[#d4e1ee] text-[#1d223f] transition-colors duration-200 hover:bg-[#f4f8fc] hover:text-[#00adef]"
+          >
+            <Share2 className="h-4 w-4" />
+          </button>
           <button
             type="button"
             onClick={onViewDetails}
@@ -755,6 +766,66 @@ export const JobsPage = ({
   }, [jobsState, searchParams]);
 
   useEffect(() => {
+    const jobId = searchParams.get("jobId");
+    if (jobId) {
+      const foundJob = jobsState.find((job) => job.id === jobId);
+      if (foundJob) {
+        setSelectedJob(foundJob);
+      }
+    }
+  }, [jobsState, searchParams]);
+
+  const handleViewDetails = (job: PublicJobListing) => {
+    setSelectedJob(job);
+    const nextParams = new URLSearchParams(searchParams.toString());
+    nextParams.set("jobId", job.id);
+    const nextQuery = nextParams.toString();
+    router.replace(nextQuery ? `/jobs?${nextQuery}` : "/jobs", {
+      scroll: false,
+    });
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedJob(null);
+    const nextParams = new URLSearchParams(searchParams.toString());
+    nextParams.delete("jobId");
+    const nextQuery = nextParams.toString();
+    router.replace(nextQuery ? `/jobs?${nextQuery}` : "/jobs", {
+      scroll: false,
+    });
+  };
+
+  const handleShareJob = async (job: PublicJobListing) => {
+    const shareUrl = `${window.location.origin}/jobs?jobId=${job.id}`;
+    const shareData = {
+      title: `${job.jobTitle} - ${job.companyName}`,
+      text: `Check out this job opening for ${job.jobTitle} at ${job.companyName}.`,
+      url: shareUrl,
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        console.error("Error sharing job:", error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setApplicationStatus({
+          type: "success",
+          message: "Job link copied to clipboard!",
+        });
+        setTimeout(() => {
+          setApplicationStatus(null);
+        }, 3000);
+      } catch (err) {
+        console.error("Failed to copy link:", err);
+      }
+    }
+  };
+
+  useEffect(() => {
     setVisibleJobsCount(JOBS_PAGE_BATCH_SIZE);
   }, [
     sortBy,
@@ -1161,7 +1232,8 @@ export const JobsPage = ({
                     isApplying={applyingJobId === job.id}
                     job={job}
                     onApply={() => void applyToJob(job)}
-                    onViewDetails={() => setSelectedJob(job)}
+                    onViewDetails={() => handleViewDetails(job)}
+                    onShare={() => void handleShareJob(job)}
                   />
                 ))}
                 {hasMoreJobs ? (
@@ -1196,7 +1268,12 @@ export const JobsPage = ({
             void applyToJob(selectedJob);
           }
         }}
-        onClose={() => setSelectedJob(null)}
+        onClose={handleCloseDetails}
+        onShare={() => {
+          if (selectedJob) {
+            void handleShareJob(selectedJob);
+          }
+        }}
       />
 
       <FooterSection />

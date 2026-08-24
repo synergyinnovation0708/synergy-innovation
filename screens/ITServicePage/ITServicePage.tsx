@@ -57,6 +57,7 @@ type TestimonialCard = {
 const navItems = [
   { href: "#services", label: "IT Services" },
   { href: "#products", label: "AI Products" },
+  { href: "/web-development", label: "Web Development" },
   { href: "#projects", label: "Projects" },
   { href: "#process", label: "Process" },
   { href: "#testimonials", label: "Why Us" },

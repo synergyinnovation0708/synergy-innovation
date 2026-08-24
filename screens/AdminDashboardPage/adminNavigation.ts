@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Settings2,
   Users,
+  Calendar,
   type LucideIcon,
 } from "lucide-react";
 
@@ -24,6 +25,7 @@ export const adminSidebarItems: SidebarItem[] = [
   { href: "/admin/job-seekers", icon: FileText, label: "Job Seekers" },
   { href: "/admin/employers", icon: Building2, label: "Employers" },
   { href: "/admin/it-services", icon: Code2, label: "IT Services" },
+  { href: "/admin/strategy-calls", icon: Calendar, label: "Strategy Calls" },
   { href: "/admin/candidates", icon: Users, label: "Candidates" },
   { href: "/admin/settings", icon: Settings2, label: "Settings" },
 ];

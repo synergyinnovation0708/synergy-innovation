@@ -89,18 +89,21 @@ const getCachedGlobalAdminSidebarCounts = unstable_cache(
         jobSeekersCount,
         employersCount,
         itServicesCount,
+        strategyCallsCount,
       ] = await Promise.all([
         countRowsAllowMissing(supabase, candidateProfilesTableName, "estimated"),
         countRows(supabase, jobListingsTableName, "estimated"),
         countRows(supabase, jobSeekerInquiriesTableName, "estimated"),
         countRows(supabase, employerInquiriesTableName, "estimated"),
         countRowsAllowMissing(supabase, itServiceInquiriesTableName, "estimated"),
+        countRowsAllowMissing(supabase, "strategy_calls", "estimated"),
       ]);
 
       return {
         "/admin/candidates": candidatesCount.toString(),
         "/admin/employers": employersCount.toString(),
         "/admin/it-services": itServicesCount.toString(),
+        "/admin/strategy-calls": strategyCallsCount.toString(),
         "/admin/job-listings": jobListingsCount.toString(),
         "/admin/job-seekers": jobSeekersCount.toString(),
       };
