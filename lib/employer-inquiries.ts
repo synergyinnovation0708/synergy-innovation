@@ -31,6 +31,11 @@ export const employerLocations = [
   "Kochi",
   "Visakhapatnam",
   "Patna",
+  "Kolhapur",
+  "Nashik",
+  "Jamnagar",
+  "Gandhinagar",
+  "Bhavnagar",
   "Remote",
 ] as const;
 
