@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { ITServicesInquiryTrigger } from "./ITServicesTopCta";
+import { ITServicesCaseStudySlider } from "./ITServicesCaseStudySlider";
 
 type ServiceCard = {
   bullets: string[];
@@ -659,6 +660,8 @@ export const ITServicePage = () => {
             </div>
           </div>
         </section>
+
+  <ITServicesCaseStudySlider />
 
         <section id="services" className="mx-auto max-w-[1240px] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
           <SectionEyebrow>IT PRODUCTS & SERVICES</SectionEyebrow>
