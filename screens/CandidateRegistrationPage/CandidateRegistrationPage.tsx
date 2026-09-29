@@ -27,6 +27,8 @@ import {
   jobSeekerResumeHelpText,
   resumeFileAcceptAttribute,
   validateJobSeekerInquiryValues,
+  readResumeFileIntoMemory,
+  resumeFileUnreadableMessage,
   validateResumeMetadata,
   type JobSeekerFieldName,
   type JobSeekerFormValues,
@@ -159,26 +161,37 @@ export const CandidateRegistrationPage = ({
     }
   };
 
-  const handleResumeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleResumeChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const pickedFile = event.target.files?.[0];
 
     setFormStatus(null);
 
     const validationResult = validateResumeMetadata(
-      file
+      pickedFile
         ? {
-            name: file.name,
-            size: file.size,
-            type: file.type,
+            name: pickedFile.name,
+            size: pickedFile.size,
+            type: pickedFile.type,
           }
         : null,
     );
 
-    if (validationResult.error || !file) {
+    if (validationResult.error || !pickedFile) {
       resetResume();
       setErrors((currentErrors) => ({
         ...currentErrors,
         resume: validationResult.error ?? "Resume is required.",
+      }));
+      return;
+    }
+
+    const file = await readResumeFileIntoMemory(pickedFile);
+
+    if (!file) {
+      resetResume();
+      setErrors((currentErrors) => ({
+        ...currentErrors,
+        resume: resumeFileUnreadableMessage,
       }));
       return;
     }

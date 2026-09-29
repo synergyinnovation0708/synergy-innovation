@@ -223,6 +223,26 @@ export const validateResumeMetadata = (file: ResumeValidationInput | null) => {
   };
 };
 
+// Mobile browsers (notably Android Chrome) hand back files picked from Drive or
+// Downloads as content URIs that can become unreadable before submit, making
+// fetch() fail with a generic network error. Copy the bytes into memory as soon
+// as the file is picked so the upload never depends on the original handle.
+export const readResumeFileIntoMemory = async (file: File) => {
+  try {
+    const buffer = await file.arrayBuffer();
+
+    return new File([buffer], file.name, {
+      lastModified: file.lastModified,
+      type: file.type,
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const resumeFileUnreadableMessage =
+  "We couldn't read this file. Save it to your device and select it again.";
+
 export const validateResumeFileBytes = (
   fileBytes: Uint8Array,
   fileName: string,
